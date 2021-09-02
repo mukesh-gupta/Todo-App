@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'UserAuth/base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+</head>
+<body>
+{% block content %}
+<div class="bg-body">
+<br>
+
+    <div class="row justify-content-center mt-5 second" style="padding-left:30px;padding-right:15px;color:#282ed4;">
+        <div class="col-md-5" >
+            <h2 class="detail-style" style="color:#3f51b5">User : {{todo.user}}</h2>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center mt-5" style="padding-left:15px;padding-right:15px;">
+        <div class="col-md-5">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+                {{ message|safe }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            <div class="container">
+                <div class="text-shade detail-style" style="padding-bottom:10px;color:#300930;font-size:35px;">{{todo.title|capfirst}}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+
+                        {% if todo.image %}
+                        <div>
+                            <img class="btn-round detail-style" src="{{todo.image.url}}" width="400px" height="250px">
+
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                {% if todo.desc %}
+                <h5 class="text-shade detail-style" style="padding-bottom:20px;color:#607d8b">Description : {{todo.desc|capfirst}}</h5>
+                {% endif %}
+                <h5 class="text-shade detail-style" style="margin-top:-10px;padding-bottom:20px;color:#300930;">Created : {{todo.created}}</h5>
+
+                {% if todo.datecompleted %}
+                <a  role="button" class="btn btn-warning btn btn-round" href="{% url 'update' todo.pk %}">Recover</a>
+                <a  style="margin-left:15px;" role="button" class="btn btn-danger btn btn-round" href="{% url 'delete' todo.pk %}">Delete</a>
+                <a style="margin-left:15px;"  role="button" class="btn btn-primary btn btn-round" href="{% url 'pdf' todo.pk %}">PDF</a>
+                {% else %}
+                <a role="button" class="btn-sm btn-warning btn btn-round" href="{% url 'update' todo.pk %}">Update</a>
+                <a  style="margin-left:15px;" role="button" class="btn-sm btn-success btn btn-round" href="{% url 'MartCompleted' todo.pk %}">Complete</a>
+                <a style="margin-left:15px;" role="button" class="btn-sm btn-danger btn btn-round" href="{% url 'delete' todo.pk %}">Delete</a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+<hr>
+</div>
+
+{% endblock %}
+</body>
+</html>

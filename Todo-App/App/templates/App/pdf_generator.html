@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+{% load static %}
+
+<html>
+    <head>
+        <title>ID {{todo.id}} : {{todo.title|capfirst}}</title>
+
+        <style type="text/css">
+
+        .pd-style{
+        font-weight:bold;
+        }
+
+        </style>
+    </head>
+
+
+    <body>
+    <div style="text-align:center">
+         <p class="pd-style" style="font-size:4rem;color:#00838f">Todo Item Detail</p>
+
+        <h1 class="pd-style" style="font-size:3rem;color:#0097a7">Username : {{users.username|capfirst}}</h1>
+
+        <p class="pd-style" style="font-size:2rem;color:#0288d1">Created Date: {{date}}</p>
+
+        <p class="pd-style" style="font-size:3rem;color:#37474f ">Title :  {{todo.title|capfirst}}</p>
+        <img src="{{todo.image.path}}" width="500px">
+{% if todo.desc %}
+           <p class="pd-style" style="font-size:2rem;color:#fb8c00"> Description : {{todo.desc|capfirst}}</p>
+{% endif %}
+
+        <h1 class="pd-style" style="font-size:2rem;color:#3f51b5">Completed Date : {{todo.datecompleted}} </h1>
+
+        </div>
+
+
+    </body>
+</html>

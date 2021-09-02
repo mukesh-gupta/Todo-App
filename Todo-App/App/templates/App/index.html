@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'UserAuth/base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+</head>
+<body>
+
+{% block content %}
+
+<div class="bg-body">
+<br>
+    <div class="row justify-content-center mt-5" style="padding-left:15px;padding-right:15px;">
+        <div class="col-md-5">
+    {% for message in messages %}
+            <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+             {{user.first_name|capfirst}} {{ message|safe }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+    {% endfor %}
+        </div>
+    </div>
+
+{% if  user.is_authenticated  %}
+
+<div class="row justify-content-center mt-5" >
+    <div class="col-md-7 text-center" style="color:#00838f;margin-top:-20px;">
+        <h2>{{user.first_name|capfirst}},</h2>
+        <h2> Todo{{todos.count|pluralize}} {{todos.count}} List{{todos.count|pluralize}}</h2>
+        {% if not todos %}
+        <div class="text-center" style="color:#f57c00 ;margin-top:50px;">
+            <h2>Looks like you don't have any Todo List!</h2>
+            <br>
+            <a role="button" class="btn btn-primary btn-round" href="{% url 'create' %}">New To-do</a>
+        </div>
+    {% endif %}
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="row" >
+        {% for todo in todos %}
+        <div class="col-md-4" >
+
+            {% if todo.image %}
+            <div class="polaroid">
+                <div  style="font-weight:bold;padding-bottom:10px;color:#01579b;">{{todo.title|capfirst}}</div>
+                <a href="{% url 'detail' todo.pk %}">
+                    <img class="img-polaroid" src="{{todo.image.url}}"></a>
+            </div>
+            {% endif %}
+            <br>
+            <h5 class="text-shade"style="padding-bottom:20px;color:#607d8b;">{{todo.desc|capfirst}}</h5>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+</body>
+</html>

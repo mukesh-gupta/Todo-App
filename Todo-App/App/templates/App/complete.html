@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'UserAuth/base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>complete</title>
+</head>
+<body>
+{% block content %}
+<div class="bg-body">
+<br>
+    <div class="row justify-content-center mt-5" style="padding-left:15px;padding-right:15px;">
+        <div class="col-md-5">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }} m-2 " id="msg" role="alert">
+                {{ message|safe }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="row justify-content-center mt-5 "  style="padding-left:15px;padding-right:15px;">
+        <div class="col-md-10 text-shade"  style="color:#3f51b5;margin-top:-30px">
+            <h1>Completed {{todos.count}} Todo{{todos.count|pluralize}}</h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5"  style="padding-left:15px;padding-right:15px;">
+        <div class="col-md-10" style="padding-bottom:40px;">
+            <div class="list-group" >
+                {% for todo in todos %}
+                <a style="margin-bottom:20px;" href="{% url 'detail' todo.pk %}" class=" list-group-item list-group-item-action{% if todo.important %} danger-alert{% endif %}"><b {% if todo.important %} style="color:#000000" {% endif %}>{{ todo.title|capfirst}}</b> <span {% if todo.important %} style="color:#000000" {% endif %}>- Completed {{ todo.datecompleted|date:'M j Y H:i' }}</span></a>
+
+                <div class=" col-md-0  text-right " >
+                    <a href="{% url 'delete' todo.pk %}" class="btn btn-danger btn-round">Remove</a>
+                </div>
+                <br>
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+</body>
+
+</html>
